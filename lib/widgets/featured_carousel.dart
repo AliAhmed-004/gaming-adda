@@ -2,18 +2,26 @@ import 'package:flutter/material.dart';
 
 import '../models/game.dart';
 import '../screens/game_detail_screen.dart';
+import 'game_artwork.dart';
 
 class FeaturedCarousel extends StatefulWidget {
-  const FeaturedCarousel({super.key, required this.games});
+  const FeaturedCarousel({
+    super.key,
+    required this.games,
+    this.overlay,
+    this.height = 176,
+  });
 
   final List<Game> games;
+  final Widget? overlay;
+  final double height;
 
   @override
   State<FeaturedCarousel> createState() => _FeaturedCarouselState();
 }
 
 class _FeaturedCarouselState extends State<FeaturedCarousel> {
-  final _controller = PageController(viewportFraction: 0.88);
+  final _controller = PageController(viewportFraction: 1);
   int _page = 0;
 
   @override
@@ -25,37 +33,31 @@ class _FeaturedCarouselState extends State<FeaturedCarousel> {
   @override
   Widget build(BuildContext context) {
     if (widget.games.isEmpty) {
-      return const SizedBox.shrink();
+      if (widget.overlay == null) return const SizedBox.shrink();
+      return SizedBox(
+        height: widget.height,
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: widget.overlay,
+        ),
+      );
     }
 
-    final scheme = Theme.of(context).colorScheme;
-
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-          child: Text(
-            'Featured',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-          ),
-        ),
         SizedBox(
-          height: 180,
-          child: PageView.builder(
-            controller: _controller,
-            itemCount: widget.games.length,
-            onPageChanged: (i) => setState(() => _page = i),
-            itemBuilder: (context, index) {
-              final game = widget.games[index];
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 6),
-                child: Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(16),
+          height: widget.height,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              PageView.builder(
+                controller: _controller,
+                itemCount: widget.games.length,
+                onPageChanged: (i) => setState(() => _page = i),
+                itemBuilder: (context, index) {
+                  final game = widget.games[index];
+                  return GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute<void>(
@@ -63,89 +65,73 @@ class _FeaturedCarouselState extends State<FeaturedCarousel> {
                         ),
                       );
                     },
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16),
-                      child: Stack(
-                        fit: StackFit.expand,
-                        children: [
-                          Image.network(
-                            game.coverUrl,
-                            fit: BoxFit.cover,
-                            errorBuilder: (_, _, _) => ColoredBox(
-                              color: scheme.surfaceContainerHighest,
-                              child: Icon(
-                                Icons.sports_esports,
-                                size: 48,
-                                color: scheme.primary,
-                              ),
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        Opacity(
+                          opacity: 0.42,
+                          child: ColorFiltered(
+                            colorFilter: ColorFilter.mode(
+                              Colors.brown.shade200.withValues(alpha: 0.3),
+                              BlendMode.softLight,
+                            ),
+                            child: GameArtwork(
+                              url: game.coverUrl,
+                              fit: BoxFit.cover,
                             ),
                           ),
-                          DecoratedBox(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  Colors.transparent,
-                                  Colors.black.withValues(alpha: 0.85),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            left: 16,
-                            right: 16,
-                            bottom: 16,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  game.title,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                ),
-                                const SizedBox(height: 4),
-                                Text(
-                                  game.category,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium
-                                      ?.copyWith(color: scheme.primary),
-                                ),
+                        ),
+                        const DecoratedBox(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color(0x33E5D4B0),
+                                Color(0x88E5D4B0),
+                                Color(0xF2E5D4B0),
                               ],
+                              stops: [0.0, 0.5, 1.0],
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ),
+                  );
+                },
+              ),
+              if (widget.overlay != null)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  child: widget.overlay!,
                 ),
-              );
-            },
+            ],
           ),
         ),
-        const SizedBox(height: 10),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: List.generate(widget.games.length, (i) {
-            final active = i == _page;
-            return AnimatedContainer(
-              duration: const Duration(milliseconds: 200),
-              margin: const EdgeInsets.symmetric(horizontal: 3),
-              height: 6,
-              width: active ? 18 : 6,
-              decoration: BoxDecoration(
-                color: active ? scheme.primary : scheme.outlineVariant,
-                borderRadius: BorderRadius.circular(3),
-              ),
-            );
-          }),
-        ),
+        if (widget.games.length > 1)
+          Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(widget.games.length, (i) {
+                final active = i == _page;
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 200),
+                  margin: const EdgeInsets.symmetric(horizontal: 3),
+                  height: 6,
+                  width: active ? 16 : 6,
+                  decoration: BoxDecoration(
+                    color: active
+                        ? const Color(0xFF6B4E2E)
+                        : const Color(0xFF8B7355).withValues(alpha: 0.35),
+                    borderRadius: BorderRadius.circular(3),
+                  ),
+                );
+              }),
+            ),
+          ),
       ],
     );
   }

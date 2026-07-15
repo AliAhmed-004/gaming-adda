@@ -1,10 +1,4 @@
-enum Piece {
-  empty,
-  darkMan,
-  darkKing,
-  lightMan,
-  lightKing,
-}
+enum Piece { empty, darkMan, darkKing, lightMan, lightKing }
 
 extension PieceX on Piece {
   bool get isEmpty => this == Piece.empty;
@@ -24,8 +18,7 @@ enum Side { dark, light }
 extension SideX on Side {
   Side get opposite => this == Side.dark ? Side.light : Side.dark;
 
-  bool owns(Piece piece) =>
-      this == Side.dark ? piece.isDark : piece.isLight;
+  bool owns(Piece piece) => this == Side.dark ? piece.isDark : piece.isLight;
 }
 
 class Square {
@@ -166,8 +159,7 @@ class CheckersGame {
 
     if (darkPieces == 0 || (turn == Side.dark && darkMoves.isEmpty)) {
       winner = Side.light;
-    } else if (lightPieces == 0 ||
-        (turn == Side.light && lightMoves.isEmpty)) {
+    } else if (lightPieces == 0 || (turn == Side.light && lightMoves.isEmpty)) {
       winner = Side.dark;
     }
   }
@@ -251,11 +243,7 @@ class CheckersGame {
 
       if (further.isEmpty) {
         results.add(
-          CheckersMove(
-            from: from,
-            path: [land],
-            captured: nextCaptured,
-          ),
+          CheckersMove(from: from, path: [land], captured: nextCaptured),
         );
       } else {
         for (final cont in further) {

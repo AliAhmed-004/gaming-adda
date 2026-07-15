@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.8
   webview_flutter: ^4.14.1
   google_fonts: ^8.1.0
+  audioplayers: ^6.8.1
 
 dev_dependencies:
   flutter_test:
@@ -59,10 +60,15 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/sounds/
+    - assets/ui/
+    - assets/icons/checkers.png
+    - assets/icons/ludo.png
+    - assets/ludo/tokens/token_red.png
+    - assets/ludo/tokens/token_green.png
+    - assets/ludo/tokens/token_yellow.png
+    - assets/ludo/tokens/token_blue.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -7,9 +7,21 @@ const mockGames = <Game>[
     category: 'Strategy',
     description:
         'Classic American checkers. Capture opponents, crown kings on the far row, and outplay a built-in AI — all instant, no install.',
-    thumbnailUrl: 'https://picsum.photos/seed/checkers/200/200',
-    coverUrl: 'https://picsum.photos/seed/checkers-cover/800/400',
+    thumbnailUrl: 'assets/icons/checkers.png',
+    coverUrl: 'assets/icons/checkers.png',
     rating: 4.9,
+    playUrl: '',
+    featured: true,
+  ),
+  Game(
+    id: 'ludo',
+    title: 'Ludo',
+    category: 'Family',
+    description:
+        'Classic Ludo for 2–4 players. Roll the die, race four tokens home, capture rivals on the path — hotseat or vs computer.',
+    thumbnailUrl: 'assets/icons/ludo.png',
+    coverUrl: 'assets/icons/ludo.png',
+    rating: 4.8,
     playUrl: '',
     featured: true,
   ),

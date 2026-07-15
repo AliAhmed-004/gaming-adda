@@ -107,10 +107,7 @@ class _SquareCell extends StatelessWidget {
             if (selected)
               Container(
                 decoration: BoxDecoration(
-                  border: Border.all(
-                    color: CheckersBoard._highlight,
-                    width: 3,
-                  ),
+                  border: Border.all(color: CheckersBoard._highlight, width: 3),
                 ),
               ),
             if (isTarget)
@@ -124,10 +121,7 @@ class _SquareCell extends StatelessWidget {
                   ),
                 ),
               ),
-            if (!piece.isEmpty)
-              Center(
-                child: _PieceToken(piece: piece),
-              ),
+            if (!piece.isEmpty) Center(child: _PieceToken(piece: piece)),
           ],
         ),
       ),
@@ -166,7 +160,9 @@ class _PieceToken extends StatelessWidget {
             ? Icon(
                 Icons.workspace_premium_rounded,
                 size: 18,
-                color: isDark ? const Color(0xFFCCFBF1) : const Color(0xFF44403C),
+                color: isDark
+                    ? const Color(0xFFCCFBF1)
+                    : const Color(0xFF44403C),
               )
             : null,
       ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'cartoon_ui/cartoon_buttons.dart';
+
 class CategoryChips extends StatelessWidget {
   const CategoryChips({
     super.key,
@@ -20,15 +22,13 @@ class CategoryChips extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16),
         itemCount: categories.length,
-        separatorBuilder: (_, _) => const SizedBox(width: 8),
+        separatorBuilder: (_, _) => const SizedBox(width: 10),
         itemBuilder: (context, index) {
           final category = categories[index];
-          final isSelected = category == selected;
-          return FilterChip(
-            label: Text(category),
-            selected: isSelected,
-            showCheckmark: false,
-            onSelected: (_) => onSelected(category),
+          return CartoonCategoryChip(
+            label: category,
+            selected: category == selected,
+            onTap: () => onSelected(category),
           );
         },
       ),

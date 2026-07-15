@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../models/game.dart';
 import '../navigation.dart';
+import '../widgets/game_artwork.dart';
 import '../widgets/play_button.dart';
 
 class GameDetailScreen extends StatelessWidget {
@@ -22,31 +24,20 @@ class GameDetailScreen extends StatelessWidget {
             flexibleSpace: FlexibleSpaceBar(
               title: Text(
                 game.title,
-                style: const TextStyle(fontWeight: FontWeight.w700),
+                style: GoogleFonts.fredoka(fontWeight: FontWeight.w700),
               ),
               background: Stack(
                 fit: StackFit.expand,
                 children: [
-                  Image.network(
-                    game.coverUrl,
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, _, _) => ColoredBox(
-                      color: scheme.surfaceContainerHighest,
-                      child: Icon(
-                        Icons.sports_esports,
-                        size: 64,
-                        color: scheme.primary,
-                      ),
-                    ),
-                  ),
+                  GameArtwork(url: game.coverUrl, fit: BoxFit.cover),
                   DecoratedBox(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         colors: [
-                          Colors.black.withValues(alpha: 0.1),
-                          scheme.surface.withValues(alpha: 0.95),
+                          Colors.black.withValues(alpha: 0.15),
+                          scheme.surface.withValues(alpha: 0.97),
                         ],
                       ),
                     ),
@@ -63,20 +54,41 @@ class GameDetailScreen extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Chip(
-                        label: Text(game.category),
-                        visualDensity: VisualDensity.compact,
-                      ),
-                      const SizedBox(width: 12),
-                      Icon(Icons.star_rounded, color: scheme.tertiary),
-                      const SizedBox(width: 4),
-                      Text(
-                        game.rating.toStringAsFixed(1),
-                        style: Theme.of(context).textTheme.titleMedium,
+                      GameAppIcon(url: game.thumbnailUrl, size: 72),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              game.title,
+                              style: GoogleFonts.fredoka(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Row(
+                              children: [
+                                Chip(
+                                  label: Text(game.category),
+                                  visualDensity: VisualDensity.compact,
+                                ),
+                                const SizedBox(width: 8),
+                                Icon(Icons.star_rounded, color: scheme.tertiary),
+                                const SizedBox(width: 4),
+                                Text(
+                                  game.rating.toStringAsFixed(1),
+                                  style: Theme.of(context).textTheme.titleMedium,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 20),
                   Text(
                     'About',
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(

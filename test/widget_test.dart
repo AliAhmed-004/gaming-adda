@@ -8,7 +8,6 @@ void main() {
     await tester.pump();
 
     expect(find.text('Gaming Adda'), findsOneWidget);
-    expect(find.text('Featured'), findsOneWidget);
     expect(find.text('Popular games'), findsOneWidget);
     expect(find.text('Categories'), findsOneWidget);
   });

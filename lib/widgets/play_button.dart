@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'cartoon_ui/cartoon_assets.dart';
+import 'cartoon_ui/cartoon_buttons.dart';
+
 class PlayButton extends StatelessWidget {
   const PlayButton({
     super.key,
@@ -15,37 +18,22 @@ class PlayButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (compact) {
-      return SizedBox(
-        width: double.infinity,
-        height: 34,
-        child: FilledButton.tonal(
-          onPressed: onPressed,
-          style: FilledButton.styleFrom(
-            padding: EdgeInsets.zero,
-            textStyle: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          child: Text(label),
-        ),
+      return CartoonPillButton(
+        label: label,
+        onTap: onPressed,
+        height: 36,
+        fontSize: 15,
+        asset: CartoonAssets.btnPillGold,
       );
     }
 
-    return SizedBox(
-      width: double.infinity,
+    return CartoonPillButton(
+      label: label,
+      onTap: onPressed,
+      icon: Icons.play_arrow_rounded,
       height: 52,
-      child: FilledButton.icon(
-        onPressed: onPressed,
-        icon: const Icon(Icons.play_arrow_rounded, size: 28),
-        label: Text(label),
-        style: FilledButton.styleFrom(
-          textStyle: const TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-      ),
+      fontSize: 18,
+      asset: CartoonAssets.btnPillGold,
     );
   }
 }

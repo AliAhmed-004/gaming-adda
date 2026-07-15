@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../models/game.dart';
-import '../navigation.dart';
 import '../screens/game_detail_screen.dart';
-import 'play_button.dart';
+import 'game_artwork.dart';
 
-class GameGridTile extends StatelessWidget {
-  const GameGridTile({super.key, required this.game});
+/// Play Store–style app entry: squircle icon + centered title underneath.
+class GameStoreIcon extends StatelessWidget {
+  const GameStoreIcon({
+    super.key,
+    required this.game,
+    this.iconSize = 88,
+    this.maxLabelWidth,
+  });
 
   final Game game;
+  final double iconSize;
+  final double? maxLabelWidth;
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
+    final labelWidth = maxLabelWidth ?? iconSize + 8;
 
-    final isLight = Theme.of(context).brightness == Brightness.light;
-
-    return Material(
-      color: isLight ? scheme.surface : scheme.surfaceContainerHigh,
-      clipBehavior: Clip.antiAlias,
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(14),
-        side: isLight
-            ? BorderSide(color: scheme.outlineVariant.withValues(alpha: 0.8))
-            : BorderSide.none,
-      ),
+    return Semantics(
+      button: true,
+      label: '${game.title}, ${game.category}',
       child: InkWell(
         onTap: () {
           Navigator.of(context).push(
@@ -34,69 +33,69 @@ class GameGridTile extends StatelessWidget {
             ),
           );
         },
-        child: Padding(
-          padding: const EdgeInsets.all(10),
+        borderRadius: BorderRadius.circular(iconSize * 0.22),
+        child: SizedBox(
+          width: labelWidth,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
-                    game.thumbnailUrl,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, _, _) => ColoredBox(
-                      color: scheme.surfaceContainerHighest,
-                      child: Center(
-                        child: Icon(
-                          Icons.sports_esports,
-                          color: scheme.primary,
-                          size: 36,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              GameAppIcon(url: game.thumbnailUrl, size: iconSize),
               const SizedBox(height: 8),
               Text(
                 game.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-              ),
-              const SizedBox(height: 2),
-              Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      game.category,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            color: scheme.onSurfaceVariant,
-                          ),
-                    ),
-                  ),
-                  Icon(Icons.star, size: 14, color: scheme.tertiary),
-                  const SizedBox(width: 2),
-                  Text(
-                    game.rating.toStringAsFixed(1),
-                    style: Theme.of(context).textTheme.bodySmall,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-              PlayButton(
-                compact: true,
-                onPressed: () => openPlay(context, game),
+                textAlign: TextAlign.center,
+                style: GoogleFonts.nunito(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                  color: const Color(0xFF1A1A1A),
+                  height: 1.15,
+                ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// Horizontal scrolling row of store icons (Play Store “recommended” strip).
+class GameIconStrip extends StatelessWidget {
+  const GameIconStrip({
+    super.key,
+    required this.games,
+    this.iconSize = 88,
+    this.height = 130,
+  });
+
+  final List<Game> games;
+  final double iconSize;
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    if (games.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    final itemWidth = iconSize + 8;
+
+    return SizedBox(
+      height: height,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        itemCount: games.length,
+        separatorBuilder: (_, _) => const SizedBox(width: 18),
+        itemBuilder: (context, index) {
+          return GameStoreIcon(
+            game: games[index],
+            iconSize: iconSize,
+            maxLabelWidth: itemWidth,
+          );
+        },
       ),
     );
   }
