@@ -37,6 +37,7 @@ dependencies:
   webview_flutter: ^4.14.1
   google_fonts: ^8.1.0
   audioplayers: ^6.8.1
+  flame: ^1.37.0
 
 dev_dependencies:
   flutter_test:
@@ -65,10 +66,17 @@ flutter:
     - assets/ui/
     - assets/icons/checkers.png
     - assets/icons/ludo.png
+    - assets/icons/penguin_brothers.png
     - assets/ludo/tokens/token_red.png
     - assets/ludo/tokens/token_green.png
     - assets/ludo/tokens/token_yellow.png
     - assets/ludo/tokens/token_blue.png
+    - assets/penguin_brothers/
+    - assets/penguin_brothers/characters/
+    - assets/penguin_brothers/enemies/
+    - assets/penguin_brothers/items/
+    - assets/penguin_brothers/fx/
+    - assets/penguin_brothers/tiles/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
