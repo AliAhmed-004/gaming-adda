@@ -2,6 +2,18 @@ import '../models/game.dart';
 
 const mockGames = <Game>[
   Game(
+    id: 'casino',
+    title: 'Card Match',
+    category: 'Card',
+    description:
+        'Draw from the deck and match by card number on the floor or opponent\'s collection. Play vs AI or a friend.',
+    thumbnailUrl: 'assets/icons/card_match.png',
+    coverUrl: 'assets/icons/card_match.png',
+    rating: 4.6,
+    playUrl: '',
+    featured: true,
+  ),
+  Game(
     id: 'checkers',
     title: 'Checkers',
     category: 'Strategy',
@@ -22,6 +34,18 @@ const mockGames = <Game>[
     thumbnailUrl: 'assets/icons/ludo.png',
     coverUrl: 'assets/icons/ludo.png',
     rating: 4.8,
+    playUrl: '',
+    featured: true,
+  ),
+  Game(
+    id: 'stack',
+    title: 'Stack',
+    category: 'Action',
+    description:
+        'Time your taps to stack sliding blocks as high as you can. Perfect placements keep the tower wide — miss and it is game over.',
+    thumbnailUrl: 'assets/icons/stack.png',
+    coverUrl: 'assets/icons/stack.png',
+    rating: 4.5,
     playUrl: '',
     featured: true,
   ),
