@@ -61,6 +61,18 @@ const mockGames = <Game>[
     playUrl: '',
     featured: true,
   ),
+  Game(
+    id: 'tic_tac_toe',
+    title: 'Tic-Tac-Toe',
+    category: 'Strategy',
+    description:
+        'Classic X and O on a 3×3 grid. Beat a friend hotseat or challenge the AI — Easy, Medium, or Hard.',
+    thumbnailUrl: 'assets/icons/tic_tac_toe.png',
+    coverUrl: 'assets/icons/tic_tac_toe.png',
+    rating: 4.7,
+    playUrl: '',
+    featured: true,
+  ),
 ];
 
 List<String> get mockCategories {
