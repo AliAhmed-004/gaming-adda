@@ -15,9 +15,8 @@ void main() {
     expect(moves.every((m) => m.from.row == 5), isTrue);
   });
 
-  test('mandatory capture is preferred over quiet moves', () {
+  test('capture is optional when other quiet moves exist', () {
     final game = CheckersGame();
-    // Clear board and set up a forced capture for dark.
     for (var r = 0; r < 8; r++) {
       for (var c = 0; c < 8; c++) {
         game.setPiece(Square(r, c), Piece.empty);
@@ -25,12 +24,16 @@ void main() {
     }
     game.setPiece(const Square(4, 3), Piece.darkMan);
     game.setPiece(const Square(3, 2), Piece.lightMan);
+    game.setPiece(const Square(5, 4), Piece.darkMan);
     game.turn = Side.dark;
 
     final moves = game.legalMovesFor(Side.dark);
-    expect(moves.length, 1);
-    expect(moves.single.isCapture, isTrue);
-    expect(moves.single.to, const Square(2, 1));
+    expect(moves.any((m) => m.isCapture), isTrue);
+    expect(moves.any((m) => !m.isCapture), isTrue);
+
+    final quietOnly = game.movesFrom(const Square(5, 4));
+    expect(quietOnly, isNotEmpty);
+    expect(quietOnly.every((m) => !m.isCapture), isTrue);
   });
 
   test('AI returns a legal light-side move', () {

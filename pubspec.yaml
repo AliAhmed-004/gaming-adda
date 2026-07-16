@@ -98,6 +98,11 @@ flutter:
     - assets/penguin_brothers/items/
     - assets/penguin_brothers/fx/
     - assets/penguin_brothers/tiles/
+    - assets/checkers/goti/goti_dark.png
+    - assets/checkers/goti/goti_dark_king.png
+    - assets/checkers/goti/goti_light.png
+    - assets/checkers/goti/goti_light_king.png
+    - assets/checkers/goti/goti_target.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
