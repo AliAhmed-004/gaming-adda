@@ -49,6 +49,25 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.3
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/icons/gaming_adda.png
+  adaptive_icon_background: "#0D9488"
+  adaptive_icon_foreground: assets/icons/gaming_adda.png
+  web:
+    generate: true
+    image_path: assets/icons/gaming_adda.png
+    background_color: "#0D9488"
+    theme_color: "#0D9488"
+  windows:
+    generate: true
+    image_path: assets/icons/gaming_adda.png
+  macos:
+    generate: true
+    image_path: assets/icons/gaming_adda.png
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -67,6 +86,8 @@ flutter:
     - assets/icons/checkers.png
     - assets/icons/ludo.png
     - assets/icons/penguin_brothers.png
+    - assets/icons/gaming_adda.png
+    - assets/icons/gaming_adda_logo.png
     - assets/ludo/tokens/token_red.png
     - assets/ludo/tokens/token_green.png
     - assets/ludo/tokens/token_yellow.png

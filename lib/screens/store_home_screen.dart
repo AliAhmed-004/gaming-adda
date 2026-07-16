@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../data/mock_games.dart';
 import '../models/game.dart';
+import '../theme/app_assets.dart';
 import '../widgets/cartoon_ui/cartoon_assets.dart';
 import '../widgets/cartoon_ui/cartoon_banner_title.dart';
 import '../widgets/cartoon_ui/cartoon_buttons.dart';
@@ -137,6 +138,16 @@ class _StoreHomeScreenState extends State<StoreHomeScreen> {
       padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
       child: Row(
         children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(
+              AppAssets.icon,
+              width: 48,
+              height: 48,
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(width: 10),
           const Expanded(
             child: CartoonBannerTitle(
               title: 'Gaming Adda',
