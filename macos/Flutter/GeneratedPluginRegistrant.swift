@@ -6,9 +6,11 @@ import FlutterMacOS
 import Foundation
 
 import audioplayers_darwin
+import flutter_angle
 import webview_flutter_wkwebview
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   AudioplayersDarwinPlugin.register(with: registry.registrar(forPlugin: "AudioplayersDarwinPlugin"))
+  FlutterAnglePlugin.register(with: registry.registrar(forPlugin: "FlutterAnglePlugin"))
   WebViewFlutterPlugin.register(with: registry.registrar(forPlugin: "WebViewFlutterPlugin"))
 }

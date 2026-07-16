@@ -19,6 +19,7 @@
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 
   <style>
     html, body {
@@ -42,16 +43,27 @@
 
   <title>gaming_adda</title>
   <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.jsdelivr.net/gh/Knightro63/flutter_angle/assets/gles_bindings.js"></script>
 </head>
 <body>
   <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
-
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
+    Delay Flutter bootstrap until after the first layout/paint so Chrome's
+    visualViewport matches window size. Avoids a Flutter Web engine assert:
+    "ViewInsets cannot be negative" during startup resize.
   -->
-  <script src="flutter_bootstrap.js" async></script>
+  <script>
+    function loadFlutter() {
+      var script = document.createElement('script');
+      script.src = 'flutter_bootstrap.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+
+    window.addEventListener('load', function () {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(loadFlutter);
+      });
+    });
+  </script>
 </body>
 </html>

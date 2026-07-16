@@ -38,6 +38,8 @@ dependencies:
   google_fonts: ^8.1.0
   audioplayers: ^6.8.1
   flame: ^1.37.0
+  three_js: ^0.3.0
+  pointer_interceptor: ^0.10.1+2
 
 dev_dependencies:
   flutter_test:
@@ -83,11 +85,7 @@ flutter:
   assets:
     - assets/sounds/
     - assets/ui/
-    - assets/icons/checkers.png
-    - assets/icons/ludo.png
-    - assets/icons/penguin_brothers.png
-    - assets/icons/gaming_adda.png
-    - assets/icons/gaming_adda_logo.png
+    - assets/icons/
     - assets/ludo/tokens/token_red.png
     - assets/ludo/tokens/token_green.png
     - assets/ludo/tokens/token_yellow.png

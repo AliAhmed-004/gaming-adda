@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
+import 'games/casino/casino_setup_screen.dart';
 import 'games/checkers/checkers_setup_screen.dart';
 import 'games/ludo/ludo_setup_screen.dart';
 import 'games/penguin_brothers/penguin_setup_screen.dart';
+import 'games/stack/stack_play_screen.dart';
 import 'models/game.dart';
 import 'screens/play_game_screen.dart';
 
@@ -11,6 +13,8 @@ void openPlay(BuildContext context, Game game) {
     'checkers' => const CheckersSetupScreen(),
     'ludo' => const LudoSetupScreen(),
     'penguin_brothers' => const PenguinSetupScreen(),
+    'stack' => const StackPlayScreen(),
+    'casino' => const CasinoSetupScreen(),
     _ => PlayGameScreen(game: game),
   };
 

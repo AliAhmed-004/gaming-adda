@@ -118,10 +118,10 @@ class _StoreHomeScreenState extends State<StoreHomeScreen> {
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 28),
-                      child: GameIconStrip(
+                      child: GameIconGrid(
                         games: games,
+                        columns: 3,
                         iconSize: 92,
-                        height: 136,
                       ),
                     ),
                   ),
