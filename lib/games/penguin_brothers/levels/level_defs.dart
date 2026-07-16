@@ -7,6 +7,8 @@ class LevelDef {
     this.postKeyEnemyCount = 0,
     this.hasBoss = false,
     this.bgTint,
+    this.bgAsset = 'penguin_brothers/bg_stage.png',
+    this.roundLabel,
   });
 
   final String name;
@@ -19,6 +21,12 @@ class LevelDef {
   /// Optional ARGB tint over background.
   final int? bgTint;
 
+  /// Flame images path (after `images.prefix`).
+  final String bgAsset;
+
+  /// Optional arcade banner drawn near the floor (e.g. `ROUND 1-1`).
+  final String? roundLabel;
+
   int get width => rows.first.length;
   int get height => rows.length;
 }
@@ -26,24 +34,29 @@ class LevelDef {
 /// Legend:
 /// `#` wall  `G` ground  `=` platform  `*` breakable  `B` barrel
 /// `.` empty  `1` Donfi  `2` Turu  `C` chaser  `F` fire  `K` skittish
-/// `X` exit  `S` boss  `P` fruit
+/// `X` exit  `S` boss  `P` fruit/coin
 const penguinLevels = <LevelDef>[
+  // Classic Penguin Brothers Round 1-1 topology.
   LevelDef(
-    name: 'Shipwreck Beach',
+    name: 'Round 1-1',
+    bgAsset: 'penguin_brothers/bg_round1.png',
+    roundLabel: 'ROUND 1-1',
     postKeyEnemyCount: 0,
     rows: [
-      '################',
-      '#..............#',
-      '#..............#',
-      '#..............#',
-      '#..............#',
-      '#..1.......C...#',
-      '#======..======#',
-      '#..............#',
-      '#......C.......#',
-      '#..............#',
-      '#X........P...2#',
-      'GGGGGGGGGGGGGGGG',
+      // Four decks: full top beam, split mid with green soft bars, lower mid bridges, ship floor.
+      '#..................#',
+      '#1.................#',
+      '#==================#',
+      '#..................#',
+      '#........P.......B.#',
+      '#=======****=======#',
+      '#..................#',
+      '#=****========****=#',
+      '#..................#',
+      '#..................#',
+      '#X................2#',
+      'GGGGGGGGGGGGGGGGGGGG',
+      'GGGGGGGGGGGGGGGGGGGG',
     ],
   ),
   LevelDef(

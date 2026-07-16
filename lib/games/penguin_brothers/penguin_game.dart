@@ -23,6 +23,8 @@ class PenguinGame extends FlameGame {
   final _rng = Random();
   final _ai = PenguinAi();
   final ValueNotifier<int> hudTick = ValueNotifier(0);
+  /// False while only the level tiles are shown; true after actors spawn.
+  final ValueNotifier<bool> levelReady = ValueNotifier(false);
 
   late TileMapComponent worldMap;
   final List<PenguinPlayer> players = [];
@@ -40,6 +42,7 @@ class PenguinGame extends FlameGame {
   int combo = 0;
   double comboTimer = 0;
   double shake = 0;
+  int _loadGen = 0;
 
   // Human input (set from Flutter overlays)
   double inputMoveX = 0;
@@ -59,6 +62,8 @@ class PenguinGame extends FlameGame {
 
   @override
   Future<void> onLoad() async {
+    // Assets live under assets/penguin_brothers/ (not Flame's default assets/images/).
+    images.prefix = 'assets/';
     await images.loadAll([
       'penguin_brothers/characters/donfi.png',
       'penguin_brothers/characters/turu.png',
@@ -80,6 +85,7 @@ class PenguinGame extends FlameGame {
       'penguin_brothers/tiles/wall.png',
       'penguin_brothers/tiles/breakable.png',
       'penguin_brothers/bg_stage.png',
+      'penguin_brothers/bg_round1.png',
     ]);
     lives = config.startingLives;
     camera.viewfinder.anchor = Anchor.topLeft;
@@ -89,8 +95,11 @@ class PenguinGame extends FlameGame {
   Sprite sprite(String path) => Sprite(images.fromCache(path));
 
   Future<void> loadStage(int index) async {
+    final gen = ++_loadGen;
     stageIndex = index;
-    stageLocked = false;
+    stageLocked = true;
+    levelReady.value = false;
+    overlays.remove('hud');
     world.removeAll(world.children.toList());
     players.clear();
     enemies.clear();
@@ -100,6 +109,10 @@ class PenguinGame extends FlameGame {
     keyItem = null;
     exitDoor = null;
     combo = 0;
+    inputMoveX = 0;
+    inputJump = false;
+    inputBomb = false;
+    _bombLatched = false;
 
     final level = penguinLevels[index];
     var plannedEnemies = 0;
@@ -114,9 +127,13 @@ class PenguinGame extends FlameGame {
       postKeyEnemyCount: level.postKeyEnemyCount,
     );
 
+    final worldSize = Vector2(
+      level.width * kTileSize,
+      level.height * kTileSize,
+    );
     final bg = SpriteComponent(
-      sprite: sprite('penguin_brothers/bg_stage.png'),
-      size: Vector2(level.width * kTileSize, level.height * kTileSize),
+      sprite: sprite(level.bgAsset),
+      size: worldSize,
       priority: -10,
     );
     world.add(bg);
@@ -131,6 +148,31 @@ class PenguinGame extends FlameGame {
       },
     );
     await world.add(worldMap);
+    camera.viewfinder.visibleGameSize = worldSize;
+    camera.viewfinder.position = Vector2.zero();
+
+    if (level.roundLabel != null) {
+      world.add(
+        TextComponent(
+          text: level.roundLabel!,
+          anchor: Anchor.center,
+          position: Vector2(worldSize.x / 2, worldSize.y - kTileSize * 1.15),
+          priority: 20,
+          textRenderer: TextPaint(
+            style: const TextStyle(
+              color: Color(0xFF3DDC5A),
+              fontSize: 22,
+              fontWeight: FontWeight.w900,
+              letterSpacing: 1.5,
+            ),
+          ),
+        ),
+      );
+    }
+
+    // Let the level paint for 1s, then spawn actors / HUD / controls.
+    await Future<void>.delayed(const Duration(seconds: 1));
+    if (gen != _loadGen) return;
 
     Vector2? p1;
     Vector2? p2;
@@ -222,12 +264,10 @@ class PenguinGame extends FlameGame {
       world.add(boss!);
     }
 
-    final worldSize = Vector2(
-      level.width * kTileSize,
-      level.height * kTileSize,
-    );
-    camera.viewfinder.visibleGameSize = worldSize;
     overlays.add('hud');
+    levelReady.value = true;
+    stageLocked = false;
+    hudTick.value++;
   }
 
   void _spawnEnemy(Vector2 pos, EnemyKind kind) {

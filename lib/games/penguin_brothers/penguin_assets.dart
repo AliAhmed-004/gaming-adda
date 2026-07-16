@@ -2,6 +2,7 @@
 abstract final class PenguinAssets {
   static const icon = 'assets/icons/penguin_brothers.png';
   static const bgStage = 'assets/penguin_brothers/bg_stage.png';
+  static const bgRound1 = 'assets/penguin_brothers/bg_round1.png';
 
   static const donfi = 'assets/penguin_brothers/characters/donfi.png';
   static const turu = 'assets/penguin_brothers/characters/turu.png';

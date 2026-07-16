@@ -70,7 +70,6 @@ class _PenguinPlayScreenState extends State<PenguinPlayScreen> {
                   onSecondary: () => Navigator.of(context).pop(),
                 ),
               },
-              initialActiveOverlays: const ['hud'],
             ),
             Positioned(
               top: 4,
@@ -94,31 +93,43 @@ class _PenguinPlayScreenState extends State<PenguinPlayScreen> {
                 icon: const Icon(Icons.close, color: Colors.white),
               ),
             ),
-            Positioned(
-              left: 12,
-              bottom: 24,
-              child: _Joystick(onChanged: (v) => _game.inputMoveX = v),
-            ),
-            Positioned(
-              right: 16,
-              bottom: 28,
-              child: Row(
-                children: [
-                  _ActionButton(
-                    label: 'Jump',
-                    color: PenguinTheme.green,
-                    onDown: () => _game.inputJump = true,
-                    onUp: () => _game.inputJump = false,
-                  ),
-                  const SizedBox(width: 12),
-                  _ActionButton(
-                    label: 'Bomb',
-                    color: PenguinTheme.pink,
-                    onDown: () => _game.inputBomb = true,
-                    onUp: () => _game.inputBomb = false,
-                  ),
-                ],
-              ),
+            ValueListenableBuilder<bool>(
+              valueListenable: _game.levelReady,
+              builder: (context, ready, _) {
+                if (!ready) return const SizedBox.shrink();
+                return Stack(
+                  children: [
+                    Positioned(
+                      left: 12,
+                      bottom: 24,
+                      child: _Joystick(
+                        onChanged: (v) => _game.inputMoveX = v,
+                      ),
+                    ),
+                    Positioned(
+                      right: 16,
+                      bottom: 28,
+                      child: Row(
+                        children: [
+                          _ActionButton(
+                            label: 'Jump',
+                            color: PenguinTheme.green,
+                            onDown: () => _game.inputJump = true,
+                            onUp: () => _game.inputJump = false,
+                          ),
+                          const SizedBox(width: 12),
+                          _ActionButton(
+                            label: 'Bomb',
+                            color: PenguinTheme.pink,
+                            onDown: () => _game.inputBomb = true,
+                            onUp: () => _game.inputBomb = false,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
             if (_game.paused)
               Container(
