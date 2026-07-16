@@ -37,6 +37,7 @@ dependencies:
   webview_flutter: ^4.14.1
   google_fonts: ^8.1.0
   audioplayers: ^6.8.1
+  flame: ^1.37.0
 
 dev_dependencies:
   flutter_test:
@@ -48,6 +49,25 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.3
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/icons/gaming_adda_logo.png
+  adaptive_icon_background: "#0D9488"
+  adaptive_icon_foreground: assets/icons/gaming_adda_logo.png
+  web:
+    generate: true
+    image_path: assets/icons/gaming_adda.png
+    background_color: "#0D9488"
+    theme_color: "#0D9488"
+  windows:
+    generate: true
+    image_path: assets/icons/gaming_adda.png
+  macos:
+    generate: true
+    image_path: assets/icons/gaming_adda.png
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -65,10 +85,24 @@ flutter:
     - assets/ui/
     - assets/icons/checkers.png
     - assets/icons/ludo.png
+    - assets/icons/penguin_brothers.png
+    - assets/icons/gaming_adda.png
+    - assets/icons/gaming_adda_logo.png
     - assets/ludo/tokens/token_red.png
     - assets/ludo/tokens/token_green.png
     - assets/ludo/tokens/token_yellow.png
     - assets/ludo/tokens/token_blue.png
+    - assets/penguin_brothers/
+    - assets/penguin_brothers/characters/
+    - assets/penguin_brothers/enemies/
+    - assets/penguin_brothers/items/
+    - assets/penguin_brothers/fx/
+    - assets/penguin_brothers/tiles/
+    - assets/checkers/goti/goti_dark.png
+    - assets/checkers/goti/goti_dark_king.png
+    - assets/checkers/goti/goti_light.png
+    - assets/checkers/goti/goti_light_king.png
+    - assets/checkers/goti/goti_target.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

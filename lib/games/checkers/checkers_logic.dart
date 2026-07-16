@@ -107,25 +107,36 @@ class CheckersGame {
       return _capturesFrom(forcedJumper!, piece, const []);
     }
 
-    final captures = <CheckersMove>[];
-    final quiet = <CheckersMove>[];
+    final moves = <CheckersMove>[];
 
     for (var row = 0; row < 8; row++) {
       for (var col = 0; col < 8; col++) {
         final sq = Square(row, col);
         final piece = pieceAt(sq);
         if (!side.owns(piece)) continue;
-        captures.addAll(_capturesFrom(sq, piece, const []));
-        quiet.addAll(_quietMovesFrom(sq, piece));
+        moves.addAll(_capturesFrom(sq, piece, const []));
+        moves.addAll(_quietMovesFrom(sq, piece));
       }
     }
 
-    if (captures.isNotEmpty) return captures;
-    return quiet;
+    return moves;
   }
 
   List<CheckersMove> movesFrom(Square from) {
-    return legalMovesFor(turn).where((m) => m.from == from).toList();
+    if (winner != null) return const [];
+
+    final piece = pieceAt(from);
+    if (!turn.owns(piece)) return const [];
+
+    if (forcedJumper != null) {
+      if (forcedJumper != from) return const [];
+      return _capturesFrom(from, piece, const []);
+    }
+
+    return [
+      ..._capturesFrom(from, piece, const []),
+      ..._quietMovesFrom(from, piece),
+    ];
   }
 
   /// Applies a full legal move (including multi-jump path).

@@ -25,6 +25,18 @@ const mockGames = <Game>[
     playUrl: '',
     featured: true,
   ),
+  Game(
+    id: 'penguin_brothers',
+    title: 'Penguin Brothers',
+    category: 'Action',
+    description:
+        'Throw bombs, clear adorable enemies, grab the key, and escape each stage. Play solo or with a plucky AI partner.',
+    thumbnailUrl: 'assets/icons/penguin_brothers.png',
+    coverUrl: 'assets/icons/penguin_brothers.png',
+    rating: 4.7,
+    playUrl: '',
+    featured: true,
+  ),
 ];
 
 List<String> get mockCategories {
