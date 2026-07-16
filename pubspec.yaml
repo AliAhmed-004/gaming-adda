@@ -54,9 +54,9 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: assets/icons/gaming_adda.png
+  image_path: assets/icons/gaming_adda_logo.png
   adaptive_icon_background: "#0D9488"
-  adaptive_icon_foreground: assets/icons/gaming_adda.png
+  adaptive_icon_foreground: assets/icons/gaming_adda_logo.png
   web:
     generate: true
     image_path: assets/icons/gaming_adda.png
