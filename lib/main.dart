@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'navigation.dart';
 import 'screens/store_home_screen.dart';
 import 'theme/app_theme.dart';
 import 'theme/theme_controller.dart';
@@ -37,6 +38,18 @@ class _GamingAddaAppState extends State<GamingAddaApp> {
     super.dispose();
   }
 
+  /// On web, `?game=<id>` deep-links straight into a game's play screen
+  /// (used for capturing store screenshots).
+  Widget _resolveHome() {
+    final params = Uri.base.queryParameters;
+    final gameId = params['game'];
+    if (gameId != null) {
+      final screen = buildGamePlayScreen(gameId, demo: params['demo'] == '1');
+      if (screen != null) return screen;
+    }
+    return const StoreHomeScreen();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ThemeScope(
@@ -50,7 +63,7 @@ class _GamingAddaAppState extends State<GamingAddaApp> {
             theme: AppTheme.light(),
             darkTheme: AppTheme.dark(),
             themeMode: _controller.mode,
-            home: const StoreHomeScreen(),
+            home: _resolveHome(),
           );
         },
       ),
