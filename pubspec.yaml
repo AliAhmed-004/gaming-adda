@@ -38,6 +38,7 @@ dependencies:
   google_fonts: ^8.1.0
   audioplayers: ^6.8.1
   flame: ^1.37.0
+  webview_flutter_android: ^4.13.0
 
 dev_dependencies:
   flutter_test:
@@ -98,6 +99,13 @@ flutter:
     - assets/penguin_brothers/items/
     - assets/penguin_brothers/fx/
     - assets/penguin_brothers/tiles/
+    - assets/icons/penbros_arcade.png
+    - assets/penbros_arcade/
+    - assets/penbros_arcade/emulatorjs/data/
+    - assets/penbros_arcade/emulatorjs/data/compression/
+    - assets/penbros_arcade/emulatorjs/data/cores/
+    - assets/penbros_arcade/emulatorjs/data/cores/reports/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

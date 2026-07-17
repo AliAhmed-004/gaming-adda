@@ -37,6 +37,18 @@ const mockGames = <Game>[
     playUrl: '',
     featured: true,
   ),
+  Game(
+    id: 'penbros_arcade',
+    title: 'Penguin Brothers Arcade',
+    category: 'Arcade',
+    description:
+        'The original 2000 arcade classic, emulated. Hop between platforms, pelt enemies with snowballs, and roll them off the stage — straight from the coin-op cabinet.',
+    thumbnailUrl: 'assets/icons/penbros_arcade.png',
+    coverUrl: 'assets/icons/penbros_arcade.png',
+    rating: 4.6,
+    playUrl: '',
+    featured: true,
+  ),
 ];
 
 List<String> get mockCategories {
