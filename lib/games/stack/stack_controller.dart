@@ -257,6 +257,30 @@ class StackGameController extends ChangeNotifier {
     );
   }
 
+  /// Builds a plausible mid-game tower by programmatically placing blocks
+  /// slightly off-center. Used by the `?game=stack&demo=1` screenshot deep
+  /// link, where frame-based tap timing is unreliable.
+  Future<void> runDemoTower(int count) async {
+    if (_game.state != StackGameState.ready) return;
+    startGame();
+    final random = math.Random(7);
+    for (var i = 0; i < count; i++) {
+      await Future.delayed(const Duration(milliseconds: 450));
+      final active = _game.activeBlock;
+      if (active == null || active.state != StackBlockState.active) break;
+      final target = active.targetBlock!;
+      final offset = (random.nextDouble() - 0.5) * 1.6;
+      active.position.x = target.position.x;
+      active.position.z = target.position.z;
+      if (active.workingPlane == StackAxis.x) {
+        active.position.x += offset;
+      } else {
+        active.position.z += offset;
+      }
+      placeBlock();
+    }
+  }
+
   void _addBlock() {
     if (!_game.addBlock()) {
       endGame();

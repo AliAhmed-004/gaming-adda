@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 
+import 'games/casino/casino_config.dart';
+import 'games/casino/casino_play_screen.dart';
 import 'games/casino/casino_setup_screen.dart';
+import 'games/checkers/checkers_config.dart';
+import 'games/checkers/checkers_play_screen.dart';
 import 'games/checkers/checkers_setup_screen.dart';
+import 'games/ludo/ludo_config.dart';
+import 'games/ludo/ludo_play_screen.dart';
 import 'games/ludo/ludo_setup_screen.dart';
+import 'games/penguin_brothers/penguin_config.dart';
+import 'games/penguin_brothers/penguin_play_screen.dart';
 import 'games/penguin_brothers/penguin_setup_screen.dart';
 import 'games/stack/stack_play_screen.dart';
+import 'games/tic_tac_toe/tic_tac_toe_config.dart';
+import 'games/tic_tac_toe/tic_tac_toe_play_screen.dart';
 import 'games/tic_tac_toe/tic_tac_toe_setup_screen.dart';
 import 'models/game.dart';
 import 'screens/play_game_screen.dart';
@@ -21,4 +31,19 @@ void openPlay(BuildContext context, Game game) {
   };
 
   Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => screen));
+}
+
+/// Builds the in-game (play) screen for [gameId] with default settings.
+/// Used by the `?game=` deep link to jump straight into gameplay
+/// (e.g. for store screenshots). Returns null for unknown ids.
+Widget? buildGamePlayScreen(String gameId, {bool demo = false}) {
+  return switch (gameId) {
+    'checkers' => const CheckersPlayScreen(config: CheckersConfig()),
+    'ludo' => const LudoPlayScreen(config: LudoConfig()),
+    'penguin_brothers' => const PenguinPlayScreen(config: PenguinConfig()),
+    'stack' => StackPlayScreen(demoTower: demo),
+    'casino' => const CasinoPlayScreen(config: CasinoConfig()),
+    'tic_tac_toe' => const TicTacToePlayScreen(config: TicTacToeConfig()),
+    _ => null,
+  };
 }

@@ -7,7 +7,11 @@ import 'stack_logic.dart';
 import 'stack_theme.dart';
 
 class StackPlayScreen extends StatefulWidget {
-  const StackPlayScreen({super.key});
+  const StackPlayScreen({super.key, this.demoTower = false});
+
+  /// When true, auto-builds a mid-game tower once the stage is ready
+  /// (used for store screenshots via the `?game=stack&demo=1` deep link).
+  final bool demoTower;
 
   @override
   State<StackPlayScreen> createState() => _StackPlayScreenState();
@@ -16,6 +20,7 @@ class StackPlayScreen extends StatefulWidget {
 class _StackPlayScreenState extends State<StackPlayScreen> {
   late final StackGameController _controller;
   final FocusNode _focusNode = FocusNode();
+  bool _demoStarted = false;
 
   @override
   void initState() {
@@ -24,7 +29,14 @@ class _StackPlayScreenState extends State<StackPlayScreen> {
   }
 
   void _onControllerChanged() {
-    if (mounted) setState(() {});
+    if (!mounted) return;
+    if (widget.demoTower &&
+        !_demoStarted &&
+        _controller.state == StackGameState.ready) {
+      _demoStarted = true;
+      _controller.runDemoTower(9);
+    }
+    setState(() {});
   }
 
   @override
