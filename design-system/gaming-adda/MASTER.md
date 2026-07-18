@@ -7,8 +7,10 @@
 ---
 
 **Project:** Gaming Adda
-**Generated:** 2026-07-15 22:39:39
-**Category:** Job Board/Recruitment
+**Generated:** 2026-07-18
+**Category:** Casual board & arcade games
+
+Aligned with the Flutter app theme (teal seed `#0D9488`, Fredoka + Nunito).
 
 ---
 
@@ -18,24 +20,26 @@
 
 | Role | Hex | CSS Variable |
 |------|-----|--------------|
-| Primary | `#0369A1` | `--color-primary` |
-| Secondary | `#0EA5E9` | `--color-secondary` |
-| CTA/Accent | `#22C55E` | `--color-cta` |
-| Background | `#F0F9FF` | `--color-background` |
-| Text | `#0C4A6E` | `--color-text` |
+| Primary | `#0D9488` | `--color-primary` |
+| Secondary | `#14B8A6` | `--color-secondary` |
+| CTA/Accent | `#F59E0B` | `--color-cta` |
+| Background | `#F0FDFA` | `--color-background` |
+| Surface | `#FFFFFF` | `--color-surface` |
+| Text | `#134E4A` | `--color-text` |
+| Muted | `#3F6864` | `--color-muted` |
 
-**Color Notes:** Professional blue + success green
+**Color Notes:** Playful teal + amber action — matches app store / Material seed.
 
 ### Typography
 
-- **Heading Font:** Playfair Display SC
-- **Body Font:** Karla
-- **Mood:** restaurant, menu, culinary, elegant, foodie, hospitality
-- **Google Fonts:** [Playfair Display SC + Karla](https://fonts.google.com/share?selection.family=Karla:wght@300;400;500;600;700|Playfair+Display+SC:wght@400;700)
+- **Heading Font:** Fredoka
+- **Body Font:** Nunito
+- **Mood:** playful, friendly, fun, creative, approachable
+- **Google Fonts:** [Fredoka + Nunito](https://fonts.google.com/share?selection.family=Fredoka:wght@400;500;600;700|Nunito:wght@300;400;500;600;700)
 
 **CSS Import:**
 ```css
-@import url('https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700&family=Playfair+Display+SC:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap');
 ```
 
 ### Spacing Variables
@@ -50,14 +54,13 @@
 | `--space-2xl` | `48px` / `3rem` | Section margins |
 | `--space-3xl` | `64px` / `4rem` | Hero padding |
 
-### Shadow Depths
+### Shadow Depths (Clay)
 
 | Level | Value | Usage |
 |-------|-------|-------|
-| `--shadow-sm` | `0 1px 2px rgba(0,0,0,0.05)` | Subtle lift |
-| `--shadow-md` | `0 4px 6px rgba(0,0,0,0.1)` | Cards, buttons |
-| `--shadow-lg` | `0 10px 15px rgba(0,0,0,0.1)` | Modals, dropdowns |
-| `--shadow-xl` | `0 20px 25px rgba(0,0,0,0.15)` | Hero images, featured cards |
+| `--shadow-clay` | `6px 6px 0 #0D948833, inset 0 -4px 0 #0D948822` | Soft 3D clay lift |
+| `--shadow-clay-hover` | `8px 8px 0 #0D948844, inset 0 -4px 0 #0D948822` | Hover lift |
+| `--shadow-press` | `2px 2px 0 #0D948833, inset 0 3px 0 #0D948822` | Soft press |
 
 ---
 
@@ -66,86 +69,45 @@
 ### Buttons
 
 ```css
-/* Primary Button */
 .btn-primary {
-  background: #22C55E;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 200ms ease;
+  background: #F59E0B;
+  color: #134E4A;
+  padding: 14px 28px;
+  border: 3px solid #134E4A;
+  border-radius: 20px;
+  font-weight: 700;
+  box-shadow: 4px 4px 0 #134E4A33;
+  transition: all 200ms ease-out;
   cursor: pointer;
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+  box-shadow: 6px 6px 0 #134E4A44;
+  transform: translateY(-2px);
 }
 
-/* Secondary Button */
-.btn-secondary {
-  background: transparent;
-  color: #0369A1;
-  border: 2px solid #0369A1;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 200ms ease;
-  cursor: pointer;
+.btn-primary:active {
+  box-shadow: 2px 2px 0 #134E4A33;
+  transform: translateY(1px);
 }
 ```
 
-### Cards
+### Cards (interactive only)
 
 ```css
 .card {
-  background: #F0F9FF;
-  border-radius: 12px;
+  background: #FFFFFF;
+  border: 3px solid #134E4A22;
+  border-radius: 24px;
   padding: 24px;
-  box-shadow: var(--shadow-md);
-  transition: all 200ms ease;
+  box-shadow: var(--shadow-clay);
+  transition: all 200ms ease-out;
   cursor: pointer;
 }
 
 .card:hover {
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-clay-hover);
   transform: translateY(-2px);
-}
-```
-
-### Inputs
-
-```css
-.input {
-  padding: 12px 16px;
-  border: 1px solid #E2E8F0;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: border-color 200ms ease;
-}
-
-.input:focus {
-  border-color: #0369A1;
-  outline: none;
-  box-shadow: 0 0 0 3px #0369A120;
-}
-```
-
-### Modals
-
-```css
-.modal-overlay {
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(4px);
-}
-
-.modal {
-  background: white;
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: var(--shadow-xl);
-  max-width: 500px;
-  width: 90%;
 }
 ```
 
@@ -153,51 +115,39 @@
 
 ## Style Guidelines
 
-**Style:** Flat Design
+**Style:** Claymorphism
 
-**Keywords:** 2D, minimalist, bold colors, no shadows, clean lines, simple shapes, typography-focused, modern, icon-heavy
+**Keywords:** Soft 3D, chunky, playful, toy-like, bubbly, thick borders (3–4px), double shadows, rounded (16–24px)
 
-**Best For:** Web apps, mobile apps, cross-platform, startup MVPs, user-friendly, SaaS, dashboards, corporate
-
-**Key Effects:** No gradients/shadows, simple hover (color/opacity shift), fast loading, clean transitions (150-200ms ease), minimal icons
+**Key Effects:** Inner+outer shadows, soft press (200ms ease-out), fluffy elements, smooth transitions
 
 ### Page Pattern
 
-**Pattern Name:** Enterprise Gateway
+**Pattern Name:** App Store Style Landing
 
-- **Conversion Strategy:**  logo carousel,  tab switching for industries, Path selection (I am a...). Mega menu navigation. Trust signals prominent.
-- **CTA Placement:** Contact Sales (Primary) + Login (Secondary)
-- **Section Order:** 1. Hero (Video/Mission), 2. Solutions by Industry, 3. Solutions by Role, 4. Client Logos, 5. Contact Sales
+- **CTA Placement:** Above fold + after games grid
+- **Section Order:** Hero (brand + CTA) → Games grid → Features → Final CTA
 
 ---
 
 ## Anti-Patterns (Do NOT Use)
 
-- ❌ Outdated forms
-- ❌ Hidden filters
-
-### Additional Forbidden Patterns
-
-- ❌ **Emojis as icons** — Use SVG icons (Heroicons, Lucide, Simple Icons)
-- ❌ **Missing cursor:pointer** — All clickable elements must have cursor:pointer
-- ❌ **Layout-shifting hovers** — Avoid scale transforms that shift layout
-- ❌ **Low contrast text** — Maintain 4.5:1 minimum contrast ratio
-- ❌ **Instant state changes** — Always use transitions (150-300ms)
-- ❌ **Invisible focus states** — Focus states must be visible for a11y
+- ❌ Generic design / no personality
+- ❌ Purple-on-white or dark neon themes (brand is teal)
+- ❌ Emojis as icons — use SVG
+- ❌ Missing `cursor: pointer` on clickables
+- ❌ Layout-shifting scale hovers
+- ❌ Low contrast text (< 4.5:1)
+- ❌ Ignoring `prefers-reduced-motion`
 
 ---
 
 ## Pre-Delivery Checklist
 
-Before delivering any UI code, verify:
-
-- [ ] No emojis used as icons (use SVG instead)
-- [ ] All icons from consistent icon set (Heroicons/Lucide)
+- [ ] No emojis used as icons
 - [ ] `cursor-pointer` on all clickable elements
-- [ ] Hover states with smooth transitions (150-300ms)
-- [ ] Light mode: text contrast 4.5:1 minimum
+- [ ] Hover states with smooth transitions (150–300ms)
+- [ ] Light mode text contrast 4.5:1 minimum
 - [ ] Focus states visible for keyboard navigation
 - [ ] `prefers-reduced-motion` respected
 - [ ] Responsive: 375px, 768px, 1024px, 1440px
-- [ ] No content hidden behind fixed navbars
-- [ ] No horizontal scroll on mobile

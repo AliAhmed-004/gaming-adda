@@ -1,3 +1,6 @@
+import 'dart:ui' show PlatformDispatcher;
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -8,6 +11,23 @@ import 'theme/theme_controller.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Flutter web can assert with negative viewInsets during browser resize /
+  // soft-keyboard dismiss (engine bug). Swallow that so the app keeps running.
+  final previousOnError = FlutterError.onError;
+  FlutterError.onError = (details) {
+    if (_isBenignWebViewInsetsBug(details.exceptionAsString())) {
+      return;
+    }
+    (previousOnError ?? FlutterError.presentError)(details);
+  };
+  PlatformDispatcher.instance.onError = (error, stack) {
+    if (_isBenignWebViewInsetsBug(error.toString())) {
+      return true;
+    }
+    return false;
+  };
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -15,6 +35,33 @@ void main() {
     ),
   );
   runApp(const GamingAddaApp());
+}
+
+bool _isBenignWebViewInsetsBug(String message) {
+  return message.contains('ViewInsets cannot be negative') ||
+      message.contains('_viewInsets.isNonNegative');
+}
+
+/// Clamps MediaQuery insets/padding so a transient negative engine value
+/// never reaches layout (web resize / keyboard race).
+Widget _clampMediaQuery(BuildContext context, Widget? child) {
+  final mq = MediaQuery.of(context);
+  EdgeInsets clampInsets(EdgeInsets e) => EdgeInsets.only(
+        left: e.left.clamp(0.0, double.infinity),
+        top: e.top.clamp(0.0, double.infinity),
+        right: e.right.clamp(0.0, double.infinity),
+        bottom: e.bottom.clamp(0.0, double.infinity),
+      );
+
+  return MediaQuery(
+    data: mq.copyWith(
+      viewInsets: clampInsets(mq.viewInsets),
+      padding: clampInsets(mq.padding),
+      viewPadding: clampInsets(mq.viewPadding),
+      systemGestureInsets: clampInsets(mq.systemGestureInsets),
+    ),
+    child: child ?? const SizedBox.shrink(),
+  );
 }
 
 class GamingAddaApp extends StatefulWidget {
@@ -63,6 +110,7 @@ class _GamingAddaAppState extends State<GamingAddaApp> {
             theme: AppTheme.light(),
             darkTheme: AppTheme.dark(),
             themeMode: _controller.mode,
+            builder: kIsWeb ? _clampMediaQuery : null,
             home: _resolveHome(),
           );
         },

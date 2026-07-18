@@ -1,17 +1,29 @@
-# gaming_adda
+# Gaming Adda
 
-A new Flutter project.
+Casual board games and arcade classics in one Flutter app — Checkers, Ludo, Sudoku, Connect 4, Card Match, Stack, Tic-Tac-Toe, and Penguin Brothers Arcade.
 
-## Getting Started
+## Play on the web
 
-This project is a starting point for a Flutter application.
+Marketing site + playable Flutter web app deploy to GitHub Pages:
 
-A few resources to get you started if this is your first Flutter project:
+- Landing: `https://aliahmed-004.github.io/gaming-adda/`
+- App: `https://aliahmed-004.github.io/gaming-adda/play/`
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+After merging to `main`, the **Deploy GitHub Pages** workflow builds and publishes. In the repo settings, set **Pages → Source** to **GitHub Actions**.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Local
+
+```bash
+flutter pub get
+flutter run -d chrome
+```
+
+Landing preview (static):
+
+```bash
+cd website && python3 -m http.server 8080
+```
+
+## Design
+
+Visual language follows `design-system/gaming-adda/` (claymorphism, teal brand, Fredoka + Nunito).
