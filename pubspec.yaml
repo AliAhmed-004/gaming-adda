@@ -39,6 +39,8 @@ dependencies:
   audioplayers: ^6.8.1
   flame: ^1.37.0
   webview_flutter_android: ^4.13.0
+  three_js: ^0.3.0
+  pointer_interceptor: ^0.10.1+2
 
 dev_dependencies:
   flutter_test:
@@ -84,11 +86,7 @@ flutter:
   assets:
     - assets/sounds/
     - assets/ui/
-    - assets/icons/checkers.png
-    - assets/icons/ludo.png
-    - assets/icons/penguin_brothers.png
-    - assets/icons/gaming_adda.png
-    - assets/icons/gaming_adda_logo.png
+    - assets/icons/
     - assets/ludo/tokens/token_red.png
     - assets/ludo/tokens/token_green.png
     - assets/ludo/tokens/token_yellow.png
@@ -105,7 +103,12 @@ flutter:
     - assets/penbros_arcade/emulatorjs/data/compression/
     - assets/penbros_arcade/emulatorjs/data/cores/
     - assets/penbros_arcade/emulatorjs/data/cores/reports/
-
+    - assets/checkers/goti/goti_dark.png
+    - assets/checkers/goti/goti_dark_king.png
+    - assets/checkers/goti/goti_light.png
+    - assets/checkers/goti/goti_light_king.png
+    - assets/checkers/goti/goti_target.png
+    - assets/tic_tac_toe/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

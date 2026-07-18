@@ -2,6 +2,18 @@ import '../models/game.dart';
 
 const mockGames = <Game>[
   Game(
+    id: 'casino',
+    title: 'Card Match',
+    category: 'Card',
+    description:
+        'Draw from the deck and match by card number on the floor or opponent\'s collection. Play vs AI or a friend.',
+    thumbnailUrl: 'assets/icons/card_match.png',
+    coverUrl: 'assets/icons/card_match.png',
+    rating: 4.6,
+    playUrl: '',
+    featured: true,
+  ),
+  Game(
     id: 'checkers',
     title: 'Checkers',
     category: 'Strategy',
@@ -26,6 +38,18 @@ const mockGames = <Game>[
     featured: true,
   ),
   Game(
+    id: 'stack',
+    title: 'Stack',
+    category: 'Action',
+    description:
+        'Time your taps to stack sliding blocks as high as you can. Perfect placements keep the tower wide — miss and it is game over.',
+    thumbnailUrl: 'assets/icons/stack.png',
+    coverUrl: 'assets/icons/stack.png',
+    rating: 4.5,
+    playUrl: '',
+    featured: true,
+  ),
+  Game(
     id: 'penguin_brothers',
     title: 'Penguin Brothers',
     category: 'Action',
@@ -46,6 +70,18 @@ const mockGames = <Game>[
     thumbnailUrl: 'assets/icons/penbros_arcade.png',
     coverUrl: 'assets/icons/penbros_arcade.png',
     rating: 4.6,
+    playUrl: '',
+    featured: true,
+  ),
+  Game(
+    id: 'tic_tac_toe',
+    title: 'Tic-Tac-Toe',
+    category: 'Strategy',
+    description:
+        'Classic X and O on a 3×3 grid. Beat a friend hotseat or challenge the AI — Easy, Medium, or Hard.',
+    thumbnailUrl: 'assets/icons/tic_tac_toe.png',
+    coverUrl: 'assets/icons/tic_tac_toe.png',
+    rating: 4.7,
     playUrl: '',
     featured: true,
   ),

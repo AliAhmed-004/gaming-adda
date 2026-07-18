@@ -1,6 +1,30 @@
 import 'package:flutter/material.dart';
 
 import 'checkers_logic.dart';
+import 'checkers_theme.dart';
+
+class CapturedGoti {
+  const CapturedGoti({required this.square, required this.piece});
+
+  final Square square;
+  final Piece piece;
+}
+
+class CheckersBoardAnimation {
+  const CheckersBoardAnimation({
+    required this.id,
+    required this.from,
+    required this.to,
+    required this.movingPiece,
+    required this.capturedPieces,
+  });
+
+  final int id;
+  final Square from;
+  final Square to;
+  final Piece movingPiece;
+  final List<CapturedGoti> capturedPieces;
+}
 
 class CheckersBoard extends StatelessWidget {
   const CheckersBoard({
@@ -8,6 +32,7 @@ class CheckersBoard extends StatelessWidget {
     required this.game,
     required this.selected,
     required this.targets,
+    required this.animation,
     required this.interactive,
     required this.onSquareTap,
   });
@@ -15,16 +40,9 @@ class CheckersBoard extends StatelessWidget {
   final CheckersGame game;
   final Square? selected;
   final Set<Square> targets;
+  final CheckersBoardAnimation? animation;
   final bool interactive;
   final ValueChanged<Square> onSquareTap;
-
-  static const _lightSq = Color(0xFF2A3441);
-  static const _darkSq = Color(0xFF1A222C);
-  static const _highlight = Color(0xFF2DD4BF);
-  static const _playerPiece = Color(0xFF0F766E);
-  static const _playerRim = Color(0xFF5EEAD4);
-  static const _aiPiece = Color(0xFFE7E5E4);
-  static const _aiRim = Color(0xFFA8A29E);
 
   @override
   Widget build(BuildContext context) {
@@ -32,45 +50,142 @@ class CheckersBoard extends StatelessWidget {
       aspectRatio: 1,
       child: DecoratedBox(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFF334155), width: 2),
+          borderRadius: BorderRadius.circular(14),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [CheckersTheme.frameHighlight, CheckersTheme.frame],
+          ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.45),
-              blurRadius: 18,
-              offset: const Offset(0, 8),
+              color: Colors.black.withValues(alpha: 0.5),
+              blurRadius: 22,
+              offset: const Offset(0, 10),
             ),
           ],
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final size = constraints.maxWidth / 8;
-              return Column(
-                children: List.generate(8, (row) {
-                  return Row(
-                    children: List.generate(8, (col) {
-                      final square = Square(row, col);
-                      return SizedBox(
-                        width: size,
-                        height: size,
-                        child: _SquareCell(
-                          square: square,
-                          piece: game.pieceAt(square),
-                          selected: selected == square,
-                          isTarget: targets.contains(square),
-                          interactive: interactive,
-                          onTap: () => onSquareTap(square),
-                        ),
-                      );
-                    }),
-                  );
-                }),
-              );
-            },
+        child: Padding(
+          padding: const EdgeInsets.all(5),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final size = constraints.maxWidth / 8;
+                final hiddenSquares = <Square>{
+                  if (animation != null) animation!.from,
+                  if (animation != null) ...animation!.capturedPieces.map((c) => c.square),
+                };
+                return Stack(
+                  children: [
+                    Column(
+                      children: List.generate(8, (row) {
+                        return Row(
+                          children: List.generate(8, (col) {
+                            final square = Square(row, col);
+                            return SizedBox(
+                              width: size,
+                              height: size,
+                              child: _SquareCell(
+                                square: square,
+                                piece: hiddenSquares.contains(square)
+                                    ? Piece.empty
+                                    : game.pieceAt(square),
+                                selected: selected == square,
+                                isTarget: targets.contains(square),
+                                interactive: interactive,
+                                onTap: () => onSquareTap(square),
+                              ),
+                            );
+                          }),
+                        );
+                      }),
+                    ),
+                    if (animation != null)
+                      _MoveOverlay(
+                        animation: animation!,
+                        tileSize: size,
+                      ),
+                  ],
+                );
+              },
+            ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _MoveOverlay extends StatelessWidget {
+  const _MoveOverlay({required this.animation, required this.tileSize});
+
+  final CheckersBoardAnimation animation;
+  final double tileSize;
+
+  Offset _offsetFor(Square square) {
+    return Offset(square.col * tileSize, square.row * tileSize);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final start = _offsetFor(animation.from);
+    final end = _offsetFor(animation.to);
+
+    return IgnorePointer(
+      child: Stack(
+        children: [
+          for (final captured in animation.capturedPieces)
+            Positioned(
+              left: captured.square.col * tileSize,
+              top: captured.square.row * tileSize,
+              width: tileSize,
+              height: tileSize,
+              child: TweenAnimationBuilder<double>(
+                key: ValueKey('capture-${animation.id}-${captured.square}'),
+                tween: Tween<double>(begin: 1, end: 0),
+                duration: CheckersTheme.captureAnimationDuration,
+                curve: Curves.easeInCubic,
+                builder: (context, value, child) {
+                  return Opacity(
+                    opacity: value.clamp(0, 1),
+                    child: Transform.scale(
+                      scale: 0.88 + (0.12 * value),
+                      child: child,
+                    ),
+                  );
+                },
+                child: Center(
+                  child: _GotiSprite(
+                    piece: captured.piece,
+                    selected: false,
+                    animatedGlow: false,
+                  ),
+                ),
+              ),
+            ),
+          TweenAnimationBuilder<Offset>(
+            key: ValueKey('move-${animation.id}'),
+            tween: Tween<Offset>(begin: start, end: end),
+            duration: CheckersTheme.moveAnimationDuration,
+            curve: Curves.easeInOutCubic,
+            builder: (context, offset, child) {
+              return Positioned(
+                left: offset.dx,
+                top: offset.dy,
+                width: tileSize,
+                height: tileSize,
+                child: child!,
+              );
+            },
+            child: Center(
+              child: _GotiSprite(
+                piece: animation.movingPiece,
+                selected: false,
+                animatedGlow: true,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -95,33 +210,29 @@ class _SquareCell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = square.isDarkSquare;
-    final bg = isDark ? CheckersBoard._darkSq : CheckersBoard._lightSq;
-
     return Material(
-      color: bg,
+      color: Colors.transparent,
       child: InkWell(
         onTap: interactive ? onTap : null,
         child: Stack(
+          fit: StackFit.expand,
           children: [
-            if (selected)
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: CheckersBoard._highlight, width: 3),
-                ),
-              ),
+            _BoardTile(isDark: square.isDarkSquare),
             if (isTarget)
               Center(
-                child: Container(
-                  width: 14,
-                  height: 14,
-                  decoration: BoxDecoration(
-                    color: CheckersBoard._highlight.withValues(alpha: 0.85),
-                    shape: BoxShape.circle,
+                child: FractionallySizedBox(
+                  widthFactor: 0.38,
+                  heightFactor: 0.38,
+                  child: Image.asset(
+                    CheckersTheme.gotiTarget,
+                    fit: BoxFit.contain,
+                    filterQuality: FilterQuality.high,
+                    gaplessPlayback: true,
                   ),
                 ),
               ),
-            if (!piece.isEmpty) Center(child: _PieceToken(piece: piece)),
+            if (!piece.isEmpty)
+              Center(child: _GotiSprite(piece: piece, selected: selected)),
           ],
         ),
       ),
@@ -129,42 +240,124 @@ class _SquareCell extends StatelessWidget {
   }
 }
 
-class _PieceToken extends StatelessWidget {
-  const _PieceToken({required this.piece});
+class _BoardTile extends StatelessWidget {
+  const _BoardTile({required this.isDark});
 
-  final Piece piece;
+  final bool isDark;
 
   @override
   Widget build(BuildContext context) {
-    final isDark = piece.isDark;
-    final fill = isDark ? CheckersBoard._playerPiece : CheckersBoard._aiPiece;
-    final rim = isDark ? CheckersBoard._playerRim : CheckersBoard._aiRim;
+    final top = isDark ? CheckersTheme.tileDarkTop : CheckersTheme.tileLightTop;
+    final bottom =
+        isDark ? CheckersTheme.tileDarkBottom : CheckersTheme.tileLightBottom;
+    final bevel =
+        isDark ? CheckersTheme.tileDarkBevel : CheckersTheme.tileLightBevel;
+    final shadow =
+        isDark ? CheckersTheme.tileDarkShadow : CheckersTheme.tileLightShadow;
 
-    return FractionallySizedBox(
-      widthFactor: 0.72,
-      heightFactor: 0.72,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: fill,
-          border: Border.all(color: rim, width: 3),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.35),
-              blurRadius: 4,
-              offset: const Offset(0, 2),
-            ),
-          ],
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [top, bottom],
         ),
-        child: piece.isKing
-            ? Icon(
-                Icons.workspace_premium_rounded,
-                size: 18,
-                color: isDark
-                    ? const Color(0xFFCCFBF1)
-                    : const Color(0xFF44403C),
-              )
-            : null,
+        border: Border(
+          top: BorderSide(color: bevel.withValues(alpha: 0.55), width: 1),
+          left: BorderSide(color: bevel.withValues(alpha: 0.45), width: 1),
+          bottom: BorderSide(color: shadow.withValues(alpha: 0.9), width: 1),
+          right: BorderSide(color: shadow.withValues(alpha: 0.75), width: 1),
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(2),
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                top.withValues(alpha: 0.92),
+                bottom.withValues(alpha: 0.98),
+              ],
+            ),
+            border: Border.all(
+              color: bevel.withValues(alpha: 0.18),
+              width: 0.5,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _GotiSprite extends StatelessWidget {
+  const _GotiSprite({
+    required this.piece,
+    required this.selected,
+    this.animatedGlow = false,
+  });
+
+  final Piece piece;
+  final bool selected;
+  final bool animatedGlow;
+
+  @override
+  Widget build(BuildContext context) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween<double>(begin: 0, end: 1),
+      duration: animatedGlow
+          ? CheckersTheme.moveAnimationDuration
+          : CheckersTheme.glowAnimationDuration,
+      curve: Curves.easeOutCubic,
+      builder: (context, progress, child) {
+        final effectiveScale = selected ? 1.0 + (0.08 * progress) : 1.0;
+        final glowAlpha = selected ? 0.85 * progress : 0.0;
+        final outerGlowAlpha = selected ? 0.35 * progress : 0.0;
+        return Transform.scale(
+          scale: effectiveScale,
+          child: FractionallySizedBox(
+            widthFactor: 0.92,
+            heightFactor: 0.92,
+            child: AnimatedContainer(
+              duration: CheckersTheme.glowAnimationDuration,
+              curve: Curves.easeOutCubic,
+              decoration: selected
+                  ? BoxDecoration(
+                      borderRadius: BorderRadius.circular(999),
+                      boxShadow: [
+                        BoxShadow(
+                          color: CheckersTheme.selectedGlow.withValues(
+                            alpha: glowAlpha,
+                          ),
+                          blurRadius: 16,
+                          spreadRadius: 2,
+                        ),
+                        BoxShadow(
+                          color: CheckersTheme.selectedGlow.withValues(
+                            alpha: outerGlowAlpha,
+                          ),
+                          blurRadius: 28,
+                          spreadRadius: 4,
+                        ),
+                      ],
+                    )
+                  : const BoxDecoration(),
+              child: child,
+            ),
+          ),
+        );
+      },
+      child: FractionallySizedBox(
+        widthFactor: 1,
+        heightFactor: 1,
+        child: Image.asset(
+          CheckersTheme.gotiAsset(piece),
+          fit: BoxFit.contain,
+          filterQuality: FilterQuality.high,
+          gaplessPlayback: true,
+        ),
       ),
     );
   }

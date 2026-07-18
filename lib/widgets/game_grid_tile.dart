@@ -100,3 +100,54 @@ class GameIconStrip extends StatelessWidget {
     );
   }
 }
+
+/// Fixed grid of store icons — [columns] games per row.
+class GameIconGrid extends StatelessWidget {
+  const GameIconGrid({
+    super.key,
+    required this.games,
+    this.columns = 3,
+    this.iconSize = 88,
+  });
+
+  final List<Game> games;
+  final int columns;
+  final double iconSize;
+
+  @override
+  Widget build(BuildContext context) {
+    if (games.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final gap = 16.0;
+          final cellWidth =
+              (constraints.maxWidth - gap * (columns - 1)) / columns;
+          final labelWidth = cellWidth.clamp(0.0, iconSize + 24);
+
+          return Wrap(
+            spacing: gap,
+            runSpacing: 20,
+            children: [
+              for (final game in games)
+                SizedBox(
+                  width: cellWidth,
+                  child: Center(
+                    child: GameStoreIcon(
+                      game: game,
+                      iconSize: iconSize,
+                      maxLabelWidth: labelWidth,
+                    ),
+                  ),
+                ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
