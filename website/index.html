@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Gaming Adda — classic board games and arcade fun in one app. Play Checkers, Ludo, Sudoku, Connect 4, and more in your browser.">
+  <meta name="theme-color" content="#0D9488">
+  <meta property="og:title" content="Gaming Adda">
+  <meta property="og:description" content="Classic board games and arcade fun — play instantly in your browser.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="assets/icons/gaming_adda.png">
+  <title>Gaming Adda — Play board games in your browser</title>
+  <link rel="icon" type="image/png" href="assets/icons/gaming_adda.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#games">Skip to games</a>
+
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Gaming Adda home">
+      <img src="assets/icons/gaming_adda.png" width="40" height="40" alt="">
+      <span>Gaming Adda</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#games">Games</a>
+      <a href="#features">Features</a>
+      <a class="btn btn-sm btn-primary" href="play/">Play now</a>
+    </nav>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16"/>
+      </svg>
+    </button>
+  </header>
+
+  <nav id="mobile-nav" class="mobile-nav" hidden>
+    <a href="#games">Games</a>
+    <a href="#features">Features</a>
+    <a class="btn btn-primary" href="play/">Play now</a>
+  </nav>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="blob blob-a"></div>
+        <div class="blob blob-b"></div>
+        <div class="blob blob-c"></div>
+      </div>
+      <div class="hero-inner">
+        <p class="brand-mark">
+          <img src="assets/icons/gaming_adda_logo.png" width="72" height="72" alt="">
+          <span>Gaming Adda</span>
+        </p>
+        <h1 id="hero-title">Board games &amp; arcade classics, ready to play</h1>
+        <p class="hero-lead">
+          One playful hub for Checkers, Ludo, Sudoku, Connect 4, and more — no install, just tap and play in your browser.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary btn-lg" href="play/">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7L8 5z"/></svg>
+            Play in browser
+          </a>
+          <a class="btn btn-ghost btn-lg" href="#games">Browse games</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="games" class="section games" aria-labelledby="games-title">
+      <div class="section-inner">
+        <header class="section-head">
+          <h2 id="games-title">All games</h2>
+          <p>Pick a title and jump straight into the app.</p>
+        </header>
+        <ul class="game-grid" role="list">
+          <li>
+            <a class="game-card" href="play/?game=casino">
+              <img src="assets/icons/card_match.png" alt="" width="88" height="88">
+              <div>
+                <h3>Card Match</h3>
+                <p class="cat">Card</p>
+                <p>Match by number vs AI or a friend.</p>
+                <span class="rating" aria-label="Rating 4.6 out of 5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  4.6
+                </span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="game-card" href="play/?game=checkers">
+              <img src="assets/icons/checkers.png" alt="" width="88" height="88">
+              <div>
+                <h3>Checkers</h3>
+                <p class="cat">Strategy</p>
+                <p>Classic American checkers with a built-in AI.</p>
+                <span class="rating" aria-label="Rating 4.9 out of 5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  4.9
+                </span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="game-card" href="play/">
+              <img src="assets/icons/connect_four.png" alt="" width="88" height="88">
+              <div>
+                <h3>Connect 4</h3>
+                <p class="cat">Strategy</p>
+                <p>Drop discs, connect four — 365 AI levels.</p>
+                <span class="rating" aria-label="Rating 4.8 out of 5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  4.8
+                </span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="game-card" href="play/?game=ludo">
+              <img src="assets/icons/ludo.png" alt="" width="88" height="88">
+              <div>
+                <h3>Ludo</h3>
+                <p class="cat">Family</p>
+                <p>Race four tokens home — hotseat or vs computer.</p>
+                <span class="rating" aria-label="Rating 4.8 out of 5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  4.8
+                </span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="game-card" href="play/?game=sudoku">
+              <img src="assets/icons/sudoku.png" alt="" width="88" height="88">
+              <div>
+                <h3>Sudoku</h3>
+                <p class="cat">Puzzle</p>
+                <p>From 4×4 to 9×9 across 365 levels.</p>
+                <span class="rating" aria-label="Rating 4.8 out of 5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  4.8
+                </span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="game-card" href="play/?game=stack">
+              <img src="assets/icons/stack.png" alt="" width="88" height="88">
+              <div>
+                <h3>Stack</h3>
+                <p class="cat">Action</p>
+                <p>Time taps to build the tallest tower.</p>
+                <span class="rating" aria-label="Rating 4.5 out of 5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  4.5
+                </span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="game-card" href="play/">
+              <img src="assets/icons/penbros_arcade.png" alt="" width="88" height="88">
+              <div>
+                <h3>Penguin Brothers Arcade</h3>
+                <p class="cat">Arcade</p>
+                <p>The 2000 coin-op classic, emulated.</p>
+                <span class="rating" aria-label="Rating 4.6 out of 5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  4.6
+                </span>
+              </div>
+            </a>
+          </li>
+          <li>
+            <a class="game-card" href="play/?game=tic_tac_toe">
+              <img src="assets/icons/tic_tac_toe.png" alt="" width="88" height="88">
+              <div>
+                <h3>Tic-Tac-Toe</h3>
+                <p class="cat">Strategy</p>
+                <p>X and O vs a friend or AI.</p>
+                <span class="rating" aria-label="Rating 4.7 out of 5">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                  4.7
+                </span>
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="features" class="section features" aria-labelledby="features-title">
+      <div class="section-inner">
+        <header class="section-head">
+          <h2 id="features-title">Why Gaming Adda</h2>
+          <p>Built for quick sessions on phone, tablet, or desktop.</p>
+        </header>
+        <ul class="feature-list" role="list">
+          <li class="feature-item">
+            <span class="feature-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+            <h3>Instant play</h3>
+            <p>Open in the browser and start a match — no store download required for web.</p>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+            </span>
+            <h3>Many games, one hub</h3>
+            <p>Strategy, puzzle, family, and arcade titles live together under one brand.</p>
+          </li>
+          <li class="feature-item">
+            <span class="feature-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="4"/></svg>
+            </span>
+            <h3>AI &amp; levels</h3>
+            <p>Challenge computer opponents and climb daily-style level tracks where available.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section cta-band" aria-labelledby="cta-title">
+      <div class="section-inner cta-inner">
+        <h2 id="cta-title">Ready when you are</h2>
+        <p>Jump into the full app and pick any game from the store shelf.</p>
+        <a class="btn btn-primary btn-lg" href="play/">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7L8 5z"/></svg>
+          Launch Gaming Adda
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <a class="brand" href="#top">
+        <img src="assets/icons/gaming_adda.png" width="32" height="32" alt="">
+        <span>Gaming Adda</span>
+      </a>
+      <p>© <span id="year"></span> Gaming Adda. Play fair, have fun.</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>

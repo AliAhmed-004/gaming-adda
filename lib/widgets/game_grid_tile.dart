@@ -125,8 +125,15 @@ class GameIconGrid extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final gap = 16.0;
+          final maxW = constraints.maxWidth;
+          if (!maxW.isFinite || maxW <= 0) {
+            return const SizedBox.shrink();
+          }
           final cellWidth =
-              (constraints.maxWidth - gap * (columns - 1)) / columns;
+              ((maxW - gap * (columns - 1)) / columns).clamp(0.0, maxW);
+          if (cellWidth <= 0) {
+            return const SizedBox.shrink();
+          }
           final labelWidth = cellWidth.clamp(0.0, iconSize + 24);
 
           return Wrap(
