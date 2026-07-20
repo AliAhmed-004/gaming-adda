@@ -1,4 +1,4 @@
-package com.example.gaming_adda
+package com.spudbyte.gaming_adda
 
 import io.flutter.embedding.android.FlutterActivity
 
