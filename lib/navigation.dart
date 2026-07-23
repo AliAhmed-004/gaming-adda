@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'games/block_race/block_race_config.dart';
+import 'games/block_race/block_race_play_screen.dart';
+import 'games/block_race/block_race_setup_screen.dart';
 import 'games/casino/casino_config.dart';
 import 'games/casino/casino_play_screen.dart';
 import 'games/casino/casino_setup_screen.dart';
@@ -23,6 +26,7 @@ import 'screens/play_game_screen.dart';
 
 void openPlay(BuildContext context, Game game) {
   final Widget screen = switch (game.id) {
+    'block_race' => const BlockRaceSetupScreen(),
     'checkers' => const CheckersSetupScreen(),
     'connect_four' => const ConnectFourSetupScreen(),
     'ludo' => const LudoSetupScreen(),
@@ -42,6 +46,10 @@ void openPlay(BuildContext context, Game game) {
 /// (e.g. for store screenshots). Returns null for unknown ids.
 Widget? buildGamePlayScreen(String gameId, {bool demo = false}) {
   return switch (gameId) {
+    'block_race' => BlockRacePlayScreen(
+        config: const BlockRaceConfig(),
+        demo: demo,
+      ),
     'checkers' => const CheckersPlayScreen(config: CheckersConfig()),
     'ludo' => const LudoPlayScreen(config: LudoConfig()),
     'stack' => StackPlayScreen(demoTower: demo),

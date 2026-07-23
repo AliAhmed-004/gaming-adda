@@ -2,6 +2,18 @@ import '../models/game.dart';
 
 const mockGames = <Game>[
   Game(
+    id: 'block_race',
+    title: 'Block Race',
+    category: 'Strategy',
+    description:
+        'A 3D barricade race — roll the dice, hop your pawn along the path, and drop walls to block your rival. First to the goal wins.',
+    thumbnailUrl: 'assets/icons/block_race.png',
+    coverUrl: 'assets/icons/block_race.png',
+    rating: 4.7,
+    playUrl: '',
+    featured: true,
+  ),
+  Game(
     id: 'casino',
     title: 'Card Match',
     category: 'Card',
